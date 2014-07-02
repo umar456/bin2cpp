@@ -2,7 +2,8 @@ BIN2CPP
 =======
 
 Converts files from a binary file to C++ headers. It is similar to bin2c and
-xxd but add support for namespaces.
+xxd but adds support for namespaces. Created this to convert OpenCL kernels
+to C++ headers.
 
 Usage
 -----
