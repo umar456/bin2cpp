@@ -7,8 +7,9 @@ xxd but add support for namespaces.
 Usage
 -----
 
-|Option         | Description                                                       |
--------------------------------------------------------------------------------------
+
+| Option        | Description                                                       |
+|---------------|-------------------------------------------------------------------|
 | --name        | name of the variable (default: var)                               |
 | --file        | input file                                                        |
 | --output      | output file (If no output is specified then it prints to stdout   |
@@ -28,8 +29,9 @@ blah blah blah
 ```
 
 Command:
-
+```
 ./bin2cpp --file blah.txt --namespace blah detail --formatted --name blah_var
+```
 
 Will produce:
 
