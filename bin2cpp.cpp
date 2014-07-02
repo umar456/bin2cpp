@@ -1,3 +1,7 @@
+// Umar Arshad
+// Copyright 2014
+
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -23,11 +27,10 @@ void add_tabs(const int level ){
     }
 }
 
-int main(int argc, const char * const * const argv)
-{
-    vector<string> args(argv, argv+argc);
-
+opt_t
+parse_options(const vector<string>& args) {
     opt_t options;
+
     options["--name"]       = "";
     options["--type"]       = "";
     options["--file"]       = "";
@@ -45,7 +48,7 @@ int main(int argc, const char * const * const argv)
             formatted = true;
         }
         else if(arg == "--version") {
-            cout << argv[0] << " By Umar Arshad" << endl;
+            cout << args[0] << " By Umar Arshad" << endl;
         }
         else if(arg == "--help") {
             print_usage();
@@ -54,7 +57,7 @@ int main(int argc, const char * const * const argv)
             curr_opt = arg;
         }
         else if(curr_opt.empty()) {
-            cerr << "Invalid Argument: " << arg << endl;
+            //cerr << "Invalid Argument: " << arg << endl;
         }
         else {
             if(options[curr_opt] != "") {
@@ -71,14 +74,29 @@ int main(int argc, const char * const * const argv)
             cout << get<0>(opts) << " " << get<1>(opts) << endl;
         }
     }
+    return options;
+}
 
+int main(int argc, const char * const * const argv)
+{
+    vector<string> args(argv, argv+argc);
+
+    opt_t&& options = parse_options(args);
+
+    //Save default cout buffer. Need this to prevent crash.
+    auto bak = cout.rdbuf();
     unique_ptr<ofstream> outfile;
+
     // Set defaults
     if(options["--name"] == "")     { options["--name"]     = "var"; }
     if(options["--output"] != "")   {
+        //redirect stream if output file is specified
         outfile.reset(new ofstream(options["--output"]));
         cout.rdbuf(outfile->rdbuf());
     }
+
+    cout << "#include <cstddef>\n"; // defines size_t
+
     int ns_cnt = 0;
     int level = 0;
     if(options["--namespace"] != "") {
@@ -119,4 +137,5 @@ int main(int argc, const char * const * const argv)
         add_tabs(--level);
         cout << "}\n";
     }
+    cout.rdbuf(bak);
 }
