@@ -151,7 +151,7 @@ int main(int argc, const char * const * const argv)
     size_t char_cnt = 0;
     add_tabs(++level);
     for(char i; input.get(i);) {
-        cout << "0x" << std::hex << static_cast<int>(i) << ",\t";
+        cout << "0x" << std::hex << static_cast<int>(i & 0xff) << ",\t";
         char_cnt++;
         if(!(char_cnt % 10)) {
             cout << endl;
